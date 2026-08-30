@@ -1,4 +1,5 @@
 .phase9_venv/
+.venv/
 __pycache__/
 *.duckdb
 *.csv

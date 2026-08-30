@@ -17,6 +17,7 @@ for stage in \
   s6_lineage \
   s7_area_ledger \
   s8_event_area_accounting \
+  s10_event_area_transfer_matrix \
   s9_validate_and_report
 do
   echo ""
@@ -27,4 +28,7 @@ do
 done
 
 echo ""
-echo "Pipeline complete. See outputs/pipeline/s9_validation_report.md"
+echo "Pipeline complete."
+echo "  Core validation : outputs/pipeline/s9_validation_report.md"
+echo "  Event accounting: outputs/event_transfer/s10_qc_report.md"
+echo "  Spatial audit   : outputs/event_transfer/event_residuals.gpkg"

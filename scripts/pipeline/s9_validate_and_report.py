@@ -30,6 +30,11 @@ def main() -> None:
     events = pd.read_parquet(lib.GOLD_EVENTS_DIR / "boundary_event.parquet")
     excluded = pd.read_csv(lib.OUTPUT_DIR / "s1_excluded_non_administrative.csv")
 
+    # S10 outputs (optional — present only if S10 has run)
+    s10_summary_path = lib.EVENT_TRANSFER_DIR / "event_area_accounting_summary.csv"
+    s10_qc_path = lib.EVENT_TRANSFER_DIR / "s10_qc_report.md"
+    s10_summary = pd.read_csv(s10_summary_path) if s10_summary_path.exists() else None
+
     # V1: topology
     v1_pass = (topo["status"] == "PASS").all()
 
@@ -195,6 +200,40 @@ after every run.
   (docs/architecture/lineage_area_redesign.md section 2.9) are unchanged;
   this pipeline runs as Python + Parquet, not the medallion DuckDB schema.
 """
+
+    # Append Stage 10 summary if available
+    if s10_summary is not None:
+        n_s10 = len(s10_summary)
+        n_reconciled = (s10_summary["accounting_status"] == "RECONCILED").sum()
+        n_within1 = (s10_summary["raw_residual_pct"].fillna(0) < 1.0).sum()
+        n_unresolved = (s10_summary["accounting_status"] == "UNRESOLVED").sum()
+        total_transfer = s10_summary["total_transferred_area_km2"].sum()
+        total_unresolved_km2 = s10_summary["unresolved_residual_km2"].sum()
+        disagree = (~s10_summary["admin_spatial_agree"].fillna(True)).sum()
+        report += f"""
+## Stage 10 — Event Area Transfer Matrix & Territorial Reconciliation
+
+Full event-level spatial accounting (s10_event_area_transfer_matrix.py).
+Detailed QC report: `outputs/event_transfer/s10_qc_report.md`
+
+| Metric | Value |
+|---|---|
+| Total events processed | {n_s10} |
+| Events fully reconciled | {n_reconciled} ({100*n_reconciled/n_s10:.1f}%) |
+| Events within <1% residual tolerance | {n_within1} |
+| Events with unresolved residual | {n_unresolved} |
+| Events with admin/spatial classification disagreement | {disagree} |
+| Total measured transfer area | {total_transfer:,.1f} km² |
+| Total unresolved residual area | {total_unresolved_km2:,.2f} km² |
+
+Administrative vs spatial relationship breakdown:
+{s10_summary.groupby("administrative_relationship")["event_id"].count().to_string()}
+
+Open `outputs/event_transfer/event_residuals.gpkg` in QGIS to inspect
+unresolved residuals and measured transfers spatially.
+"""
+    else:
+        report += "\n## Stage 10\n\nNot yet run (outputs/event_transfer/ not found).\n"
 
     out_path = lib.OUTPUT_DIR / "s9_validation_report.md"
     out_path.write_text(report, encoding="utf-8")

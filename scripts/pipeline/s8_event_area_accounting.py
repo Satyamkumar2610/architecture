@@ -21,6 +21,14 @@ measurement_status is honest about what the evidence supports:
   PARTIALLY_RESOLVED      some but not all participants resolved
   UNRESOLVED_NAME         no participant name resolved to a CK
   NO_BRACKETING_VINTAGE   event year falls outside [1951, 2025]
+
+NOTE: This stage is a lightweight per-event lookup that populates
+data/products/event_area_accounting.parquet.  Stage 10
+(s10_event_area_transfer_matrix.py) is the COMPREHENSIVE reconciliation
+engine that adds multi-parent contribution breakdowns, the 3-level residual
+recovery hierarchy, conservation accounting, event narratives, and QGIS
+spatial audit outputs.  Both stages run; S10 consumes S8's prerequisite
+outputs (S4/S5/S6) directly rather than S8's output file.
 """
 
 from __future__ import annotations

@@ -27,9 +27,11 @@ GOLD_EVENTS_DIR = PROJECT_ROOT / "data" / "gold" / "events"
 GOLD_CORE_DIR = PROJECT_ROOT / "data" / "gold" / "core"
 PRODUCTS_DIR = PROJECT_ROOT / "data" / "products"
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "pipeline"
+EVENT_TRANSFER_DIR = PROJECT_ROOT / "outputs" / "event_transfer"
 EVENTS_CSV = PROJECT_ROOT / "data" / "bronze" / "events" / "district_evolution_master.csv"
+CONFIG_DIR = PROJECT_ROOT / "config"
 
-for d in (SILVER_GEOM_DIR, GOLD_SPATIAL_DIR, GOLD_EVENTS_DIR, GOLD_CORE_DIR, PRODUCTS_DIR, OUTPUT_DIR):
+for d in (SILVER_GEOM_DIR, GOLD_SPATIAL_DIR, GOLD_EVENTS_DIR, GOLD_CORE_DIR, PRODUCTS_DIR, OUTPUT_DIR, EVENT_TRANSFER_DIR):
     d.mkdir(parents=True, exist_ok=True)
 
 PIPELINE_VERSION = "2.0.0"
@@ -77,6 +79,35 @@ CONTINUITY_THRESHOLD = 0.90
 # slack. Scales with district size per architecture invariant precedent.
 CONSERVATION_ABS_TOLERANCE_KM2 = 5.0
 CONSERVATION_REL_TOLERANCE_PCT = 0.5
+
+# Residual reason taxonomy (Stage 10). Every unaccounted area must carry
+# one of these codes — never a generic "AREA_LOSS". This is the single
+# source of truth; s10_event_area_transfer_matrix imports from here.
+RESIDUAL_REASONS = {
+    "GEOMETRY_INVALID": "Source or target geometry is invalid (ST_IsValid=False)",
+    "TOPOLOGY_GAP": "Gap in planar partition (area not covered by any overlay parcel)",
+    "TOPOLOGY_OVERLAP": "Self-overlap in source vintage layer",
+    "SLIVER": "Residual is below sliver threshold — digitization noise",
+    "CRS_MISMATCH": "Area discrepancy consistent with CRS transformation error",
+    "BOUNDARY_PRECISION": "Residual within boundary-line digitization precision",
+    "VINTAGE_MISMATCH": "Event year falls outside bracketing vintage window",
+    "MISSING_DISTRICT_GEOMETRY": "Predecessor or successor has no geometry in this vintage",
+    "MISSING_PARENT": "Parent district not identified in event_summary",
+    "UNDOCUMENTED_TRANSFER": "Area moved to an administratively unrelated district",
+    "ADJACENT_DISTRICT_CANDIDATE": "Candidate recovery district identified but below confidence threshold",
+    "PARENT_RELATIONSHIP_MISMATCH": "Spatial evidence contradicts stated parent-child relationship",
+    "EVENT_METADATA_INCOMPLETE": "event_summary row lacks sufficient fields to classify transfer",
+    "UNRECOVERED_GEOMETRIC_RESIDUAL": "Residual ≥1% after all recovery levels exhausted",
+    "UNKNOWN": "Reason cannot be determined from available evidence",
+}
+
+# Administrative relationship types (S10 classification)
+ADMIN_RELATIONSHIP_TYPES = [
+    "NEW_DISTRICT", "SPLIT", "TRIFURCATION", "MULTIWAY_SPLIT",
+    "MERGER", "ABSORPTION", "CARVE_OUT", "AREA_TRANSFER",
+    "BOUNDARY_TRANSFER", "RENAME", "REORGANISATION",
+    "RECLASSIFICATION", "UNKNOWN",
+]
 
 GEOD = Geod(ellps="WGS84")
 

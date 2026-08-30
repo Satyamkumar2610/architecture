@@ -1285,3 +1285,69 @@ Status: NON-BLOCKING — parameter is configurable without schema changes.
 | C12 | correction_log minimal | Fully specified with entity_type, correction_type, old/new value | Implementation requires complete spec | Schema definition | NO |
 | C13 | dim_time 1940–2030 | dim_time 1800–2100 | Pre-independence records exist | Time dimension rebuild | NO |
 | C14 | statistical_crosswalk.geo_xwalk_id NOT NULL implied | NULLABLE for raster-based weighting methods | Population/cropland-weighted methods have no geo_xwalk | Schema change | NO |
+---
+
+## Stage 10 — Event Area Transfer Matrix & Territorial Reconciliation Engine
+
+### Purpose
+
+Stage 10 is the full per-event spatial accounting engine. It extends the
+"one primitive, three products" model (§4.7 of the redesign doc) to five
+products, all derived from the same transition matrix M:
+
+| Product | Source | Stage |
+|---|---|---|
+| Lineage graph (district_relationship) | M, genuine new-CK edges | S6 |
+| Area ledger (district_area_ledger) | M, per-CK window accounting | S7 |
+| Statistical crosswalk (M-hat) | row-normalized M | future |
+| **Event area transfer matrix** | M joined to events, per (event, pred, succ) | **S10** |
+| **Event territorial reconciliation** | conservation + residual recovery | **S10** |
+
+### Architecture Invariants Enforced by S10
+
+- **No silent area loss**: raw residual always recorded, never forced to zero.
+- **Declared ≠ measured**: `declared_transfer` and `measured_transfer` are separate fields.
+- **No normalization**: area weights never forced to sum to 1.0. Residual gets a reason code.
+- **Events as evidence (Principle 7)**: `administrative_relationship` and `spatial_relationship` stored and compared separately. Disagreements flagged, not hidden.
+- **Chronological processing**: events processed in strict year order.
+- **Deterministic IDs**: sha256 natural keys. Reruns produce byte-identical joins.
+
+### Outputs
+
+```
+outputs/event_transfer/
+├── event_area_transfer_matrix.{csv,parquet}
+├── event_area_accounting_summary.{csv,parquet}
+├── event_district_relationships.csv
+├── residual_area_audit.csv
+├── district_area_ledger_event.csv
+├── event_narratives.{json,md}
+├── event_residuals.gpkg   (4 QGIS layers: raw/recovered/unresolved/transfers)
+└── s10_qc_report.md
+```
+
+### Conservation Equation (hard requirement — no exceptions)
+
+```
+source_area_km2       = area(predecessor at pre_vintage)
+accounted_area_km2    = Σ_j M[pred_obs, succ_obs_j]
+residual_area_km2     = max(0, source_area_km2 − accounted_area_km2)
+residual_pct          = residual_area_km2 / source_area_km2 × 100
+
+NEVER: residual = 0 by normalization
+ALWAYS: raw_residual stored in residual_area_audit.csv regardless of magnitude
+```
+
+### Residual Recovery Hierarchy
+
+| Level | Check | Outcome |
+|---|---|---|
+| Tolerance gate | \|residual_pct\| < 1% | IGNORABLE_RESIDUAL (kept in audit) |
+| L1 — geometry | invalid geom, CRS mismatch, slivers | document; reclassify reason |
+| L2 — adjacency scoring | score_j = Σ w_k × feature_k (config/reconciliation.yaml) | RECOVERED_BY_ADJACENCY if score ≥ threshold |
+| L3 — parent-child constrained | event_summary relationship constrains candidates | prefer administratively related |
+| Exhausted | all levels fail | UNRESOLVED_RESIDUAL with taxonomy reason code |
+
+### Residual Reason Taxonomy
+
+`GEOMETRY_INVALID | TOPOLOGY_GAP | TOPOLOGY_OVERLAP | SLIVER | CRS_MISMATCH | BOUNDARY_PRECISION | VINTAGE_MISMATCH | MISSING_DISTRICT_GEOMETRY | MISSING_PARENT | UNDOCUMENTED_TRANSFER | ADJACENT_DISTRICT_CANDIDATE | PARENT_RELATIONSHIP_MISMATCH | EVENT_METADATA_INCOMPLETE | UNRECOVERED_GEOMETRIC_RESIDUAL | UNKNOWN`

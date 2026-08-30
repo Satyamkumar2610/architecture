@@ -1,0 +1,76 @@
+# Reconciliation engine configuration for Stage 10
+# (s10_event_area_transfer_matrix.py)
+#
+# Every threshold and weight here has a rationale comment.
+# Change these values rather than hard-coding in scripts.
+
+# ---------------------------------------------------------------------------
+# Residual accounting
+# ---------------------------------------------------------------------------
+
+# A residual below this percentage of source district area is classified
+# IGNORABLE_RESIDUAL. It is NEVER deleted from the audit table — it is
+# recorded with this classification. This implements the "1% tolerance rule"
+# from the architecture spec (§8 of event accounting requirements).
+residual_tolerance_pct: 1.0
+
+# ---------------------------------------------------------------------------
+# Recovery hierarchy weights (Level 2 adjacency scoring)
+# Scores are combined as:
+#   Score_j = w1*adjacent + w2*parent_relation + w3*shared_boundary
+#              + w4*area_consistency + w5*event_relation
+# Weights must sum to 1.0.
+# ---------------------------------------------------------------------------
+recovery_weights:
+  # Whether j shares a boundary with the residual polygon
+  adjacency: 0.25
+  # Whether j is a known parent or child of the event's predecessor/successor
+  parent_relation: 0.30
+  # Length of shared boundary between residual and j, normalized
+  shared_boundary: 0.20
+  # Whether j's area gain is consistent with the residual size
+  area_consistency: 0.15
+  # Whether j appears in the event_summary for this event
+  event_relation: 0.10
+
+# A candidate district's combined score must clear this threshold to be
+# assigned RECOVERED_BY_ADJACENCY. Below this: UNRESOLVED_RESIDUAL.
+# Rationale: 0.65 requires substantial multi-criterion evidence, not just
+# spatial proximity. Lowering risks fabricating attribution from adjacency
+# alone; raising may leave valid recoveries unclassified.
+confidence_threshold: 0.65
+
+# ---------------------------------------------------------------------------
+# Geometry / sliver parameters (re-use lib.py values as defaults;
+# override here if event-level accounting needs different thresholds)
+# ---------------------------------------------------------------------------
+
+# Minimum parcel area to be considered a real transfer (not digitization noise)
+sliver_abs_km2: 0.5
+
+# Area method agreement tolerance: stored area vs recomputed geodesic area.
+# Two calculations of the same polygon should agree to ~1e-4%; 0.05% is a
+# smoke test for method drift (see redesign doc §2.8), not uncertainty slack.
+area_method_tolerance_pct: 0.05
+
+# ---------------------------------------------------------------------------
+# Spatial reconstruction for GPKG residual geometries
+# ---------------------------------------------------------------------------
+
+# Strategy for producing residual polygon geometry for event_residuals.gpkg.
+# "difference": reconstruct by (source_polygon - accounted_union) using
+#   silver GeoParquets. Accurate but requires loading geometries per event.
+# "centroid_only": write centroid point instead of polygon (faster, less
+#   accurate visually in QGIS). Recommended for large runs.
+residual_geometry_strategy: "difference"
+
+# ---------------------------------------------------------------------------
+# Event narrative output
+# ---------------------------------------------------------------------------
+
+# Whether to emit the machine-readable event_narratives.json (always True
+# in production; can disable for fast testing runs)
+emit_json_narratives: true
+
+# Whether to emit the human-readable event_narratives.md
+emit_md_narratives: true

@@ -1351,3 +1351,103 @@ ALWAYS: raw_residual stored in residual_area_audit.csv regardless of magnitude
 ### Residual Reason Taxonomy
 
 `GEOMETRY_INVALID | TOPOLOGY_GAP | TOPOLOGY_OVERLAP | SLIVER | CRS_MISMATCH | BOUNDARY_PRECISION | VINTAGE_MISMATCH | MISSING_DISTRICT_GEOMETRY | MISSING_PARENT | UNDOCUMENTED_TRANSFER | ADJACENT_DISTRICT_CANDIDATE | PARENT_RELATIONSHIP_MISMATCH | EVENT_METADATA_INCOMPLETE | UNRECOVERED_GEOMETRIC_RESIDUAL | UNKNOWN`
+
+---
+
+## Stage 10b — Spatial Successor Discovery & Territorial Reconciliation Engine
+
+### Purpose and Position
+
+Stage 10b is a **companion** to S10 running after S10 in the pipeline:
+`S10 → S10b → final reporting`. It processes `UNRESOLVED_RESIDUAL` events
+left by S10 (~94 of 935 events). Its objective is to **explain** each residual
+with spatial and administrative evidence — not merely to close the ledger.
+
+### Governing Principle: Two-Evidence Model
+
+```
+ADMINISTRATIVE EVIDENCE    +    SPATIAL EVIDENCE
+  event_summary                  district geometries
+  Gazette relationships          measured intersections
+  event metadata                 shared boundaries
+        ↓                                ↓
+   (declared)                      (discovered)
+        └──────────── S10b JOIN ───────────┘
+                            ↓
+               Reconciliation decision (never silent merge)
+```
+
+A spatially discovered relationship is **never** automatically an administrative
+one. A declared relationship is **never** assumed spatially correct without
+geometric verification. Disagreement → `EVENT_GEOMETRY_IDENTITY_MISMATCH` (research
+finding, not a resolution).
+
+### Recovery Hierarchy L0–L6
+
+| Level | Method |
+|---|---|
+| L0 | Direct resolution (already done by S10) |
+| L1 | Evidence-based alias table (60+ DOCUMENTARY entries) |
+| L2 | Cross-state identity (STATE_PREDECESSOR_MAP; removes state constraint) |
+| L3 | Full spatial discovery — ALL target-vintage districts via STRtree |
+| L4 | Parent-child constrained recovery |
+| L5 | Adjacency/shared-boundary heuristic |
+| L6 | UNRESOLVED — documented cause required |
+
+### Dual Confidence (not a single blind score)
+
+`spatial_confidence` and `administrative_confidence` are computed and reported
+**separately**. Administrative evidence gates candidate classification before
+scores are combined. Weights are configurable in `config/reconciliation.yaml`.
+
+### Two-Registry Alias Architecture
+
+```
+data/gold/core/name_alias_candidates.parquet  ← discovered; require review
+data/gold/core/name_alias_registry.parquet    ← approved (DOCUMENTARY/MANUAL only)
+```
+
+`SPATIAL_DISCOVERY` alone never promotes an alias to authoritative registry.
+
+### S10 Output Immutability
+
+```
+residual_area_audit_s10.csv   ← S10 original (READ-ONLY, never overwritten)
+residual_area_audit_s10b.csv  ← S10b augmented
+residual_area_audit.csv       ← convenience latest alias
+```
+
+`initial_residual_pct` (S10 raw) and `post_discovery_residual_pct` (S10b) are
+**separate fields** — both always present in the audit table.
+
+### Invariants
+
+1. No lineage modification — S10b does NOT write to district_relationship (S6) or district_area_ledger (S7).
+2. No area fabrication — area is never manufactured to close the ledger.
+3. No silent discard — every residual has a documented reason code.
+4. Raw residual preserved — `initial_residual_pct` = S10's original value.
+5. Identity ≠ territory — territorial transfer between continuing districts ≠ lineage.
+6. 1% rule applied after recovery — materiality threshold, not a data-cleaning rule.
+7. Provenance on every relationship — event_id, geometry IDs, vintage, level, reason.
+
+### New Outputs
+
+```
+outputs/event_transfer/
+  residual_area_audit_s10.csv                    ← S10 original (READ-ONLY)
+  residual_area_audit_s10b.csv                   ← S10b augmented (779 rows)
+  spatial_successor_candidates.{csv,parquet}     ← all L3 candidates
+  event_spatial_candidates.gpkg                  ← 4 QGIS layers (with geometry)
+  event_area_transfer_matrix.{csv,parquet}       ← augmented (+11 spec fields)
+  event_area_accounting_summary_s10b.{csv,parquet}
+  event_narratives_s10b.{json,md}               ← S10b-specific narratives
+  TERRITORIAL_RECONCILIATION_REPORT.md
+data/gold/core/
+  name_alias_candidates.parquet
+  name_alias_registry.parquet
+```
+
+### Final Classification Codes
+
+`FULLY_RECONCILED | RECONCILED_WITH_IGNORABLE_RESIDUAL | RECONCILED_BY_SPATIAL_DISCOVERY | RECONCILED_BY_ALIAS | RECONCILED_BY_CROSS_STATE_RESOLUTION | REQUIRES_MANUAL_REVIEW | UNRESOLVED_GEOMETRIC_RESIDUAL | EVENT_GEOMETRY_IDENTITY_MISMATCH | DATA_VINTAGE_INSUFFICIENT | MISSING_SPATIAL_EVIDENCE`
+

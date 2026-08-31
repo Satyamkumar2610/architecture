@@ -146,8 +146,22 @@ FINAL_EVENT_CLASSIFICATIONS = [
     "MISSING_SPATIAL_EVIDENCE",
 ]
 
-# Path for persistent alias registry (Option A)
+# Alias registry paths — two-stage architecture (§16 of S10b spec):
+#   candidates: spatially-discovered or inferred aliases; require manual review
+#   registry:   approved/evidence-supported aliases only; consumed by S10 resolution
+# A SPATIAL_DISCOVERY entry alone must never auto-promote from candidates → registry.
 NAME_ALIAS_REGISTRY_PATH = GOLD_CORE_DIR / "name_alias_registry.parquet"
+NAME_ALIAS_CANDIDATES_PATH = GOLD_CORE_DIR / "name_alias_candidates.parquet"
+
+# Alias evidence types
+ALIAS_EVIDENCE_TYPES = [
+    "DOCUMENTARY",          # Gazette / official notification
+    "EXISTING_REGISTRY",    # Already confirmed in registry
+    "MANUAL_VERIFIED",      # Human-verified match
+    "NAME_NORMALIZATION",   # Deterministic string normalisation
+    "SPATIAL_DISCOVERY",    # Discovered because polygons overlap — NOT authoritative alone
+]
+ALIAS_APPROVAL_STATUS = ["APPROVED", "CANDIDATE", "REJECTED"]
 
 GEOD = Geod(ellps="WGS84")
 

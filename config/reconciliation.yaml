@@ -92,19 +92,22 @@ min_discovery_intersection_km2: 1.0
 # A 0.5% overlap means the district touches meaningfully.
 min_candidate_overlap_pct: 0.5
 
-# Candidate ranking weights for the 10-criterion spatial discovery score.
+# Candidate ranking weights (spec §40 / §19).
+# Keys must match the weight lookups in s10b_spatial_successor_discovery.py.
 # Weights should sum to 1.0.
+# DO NOT treat administrative evidence (declared_in_event, parent_child_relation)
+# as just another weighted score — the Python code gates on these separately.
 candidate_ranking_weights:
-  intersection_pct_of_pre: 0.25      # primary signal: what fraction of pred does this cover
-  intersection_area_km2_norm: 0.20   # normalised by max overlap in the event
-  intersection_pct_of_candidate: 0.12 # does the candidate "fit" inside the predecessor?
-  name_similarity: 0.12              # fuzzy name match between declared successor and candidate
-  declared_in_event: 0.10            # was candidate explicitly listed in event_summary?
-  parent_child_relation: 0.08        # is candidate a known child/parent in district_relationship?
-  state_transition_compat: 0.06      # is the state transition historically plausible?
-  event_year_compat: 0.04            # is candidate active (established ≤ post_vintage)?
-  shared_boundary_norm: 0.02         # shared boundary fraction (if computable)
-  centroid_distance_inv: 0.01        # inverse centroid distance (proximity)
+  intersection_area_km2: 0.25        # normalised to max overlap in the event
+  intersection_pct_of_pre: 0.20      # fraction of predecessor covered
+  intersection_pct_of_candidate: 0.15 # does candidate "fit" inside predecessor?
+  shared_boundary: 0.10              # shared boundary length, normalised
+  spatial_adjacency: 0.05            # touches predecessor (binary)
+  event_year_compat: 0.05            # candidate active at post_vintage
+  parent_child_relation: 0.10        # known parent/child in district_relationship
+  state_transition_compat: 0.05      # historically plausible state transition
+  name_similarity: 0.03              # Jaro-Winkler vs declared successor names
+  declared_in_event: 0.02            # explicitly listed in event_summary
 
 # Minimum score for a candidate to receive SPATIALLY_CONFIRMED_BUT_EVENT_UNLISTED
 spatial_confirm_threshold: 0.55

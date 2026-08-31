@@ -3387,7 +3387,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 6,555.0640 km² (53.1129%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Nawada** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Aurangabad** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -4156,7 +4156,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 7,106.5695 km² (56.0204%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Dibrugarh** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Lakhimpur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -4651,7 +4651,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 1,759.9308 km² (54.9557%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Badgam** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Pulwama** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -6597,7 +6597,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 8,054.3195 km² (56.5131%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Godda** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Sahibganj** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -6663,7 +6663,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 8,054.3195 km² (56.5131%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Godda** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Sahibganj** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -8309,7 +8309,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 3,205.3069 km² (40.2909%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Kishanganj** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Araria** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -8607,7 +8607,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 4,094.9307 km² (100.0000%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Buxar** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Bhojpur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -8701,7 +8701,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 5,894.9356 km² (100.0000%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Supaul** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Saharsa** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -8853,7 +8853,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 2,985.7526 km² (100.0000%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Bokaro** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Dhanbad** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -9141,7 +9141,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 16,529.6368 km² (100.0000%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Udaipur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Rajsamand** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -9774,7 +9774,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 3,686.2987 km² (33.8248%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Jajapur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Kendrapara** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -10453,7 +10453,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 6,591.3643 km² (37.9292%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Jharsuguda** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Debagarh** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -10959,7 +10959,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 6,322.3965 km² (57.8593%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Karur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Perambalur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -10991,7 +10991,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 6,322.3965 km² (57.8593%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Karur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Perambalur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -13360,7 +13360,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 12,766.5444 km² (59.1455%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Mahasamund** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Dhamtari** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -14085,7 +14085,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 7,203.1872 km² (56.8585%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Kolasib** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Serchhip** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -14153,7 +14153,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 3,856.8946 km² (30.4445%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Aizawl** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Kolasib** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -14575,7 +14575,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 1,562.3070 km² (100.0000%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Arwal** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Jehanabad** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -14767,7 +14767,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 8,562.4619 km² (100.0000%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Gumla** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Simdega** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -15746,7 +15746,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 2,181.8913 km² (57.4849%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Longleng** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Kiphire** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -16072,7 +16072,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 2,675.1396 km² (56.4025%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Ganderbal** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Bandipore** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -18295,7 +18295,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 2,039.7691 km² (100.0000%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Hapur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Ghaziabad** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -18761,7 +18761,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 5,088.9802 km² (40.5636%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Raipur** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Baloda Bazar** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -21235,7 +21235,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 8,601.1554 km² (53.3991%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Mancherial** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Nirmal** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -21267,7 +21267,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 7,889.7914 km² (66.4785%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Peddapalli** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Rajanna Sircilla** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -21371,7 +21371,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 7,340.8223 km² (39.8553%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Nagarkurnool** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Wanaparthy** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -21473,7 +21473,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 7,480.6907 km² (52.4896%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Yadadri Bhuvanagiri** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Suryapet** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -21646,7 +21646,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 2,268.3826 km² (19.1131%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **Peddapalli** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Rajanna Sircilla** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---
@@ -22383,7 +22383,7 @@ Total events: 935
   - Retained by parent: 0.00 km²
   - Residual: 4,405.2363 km² (52.6869%)
   - **Status**: `RECOVERED_BY_ADJACENCY`
-    > Recovered: assigned to **West Siang** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
+    > Recovered: assigned to **Shi Yomi** (score=0.900). Reason: `ADJACENT_DISTRICT_CANDIDATE`.
 
 
 ---

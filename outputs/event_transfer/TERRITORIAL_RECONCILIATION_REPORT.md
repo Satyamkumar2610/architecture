@@ -1,6 +1,6 @@
 # Territorial Reconciliation Report — Stage 10b
 
-Generated: 2026-08-31T06:27:58.397544  |  Pipeline v2.0.0
+Generated: 2026-08-31T08:07:52.992269  |  Pipeline v2.0.0
 
 ## Summary
 

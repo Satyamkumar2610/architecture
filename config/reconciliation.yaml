@@ -74,3 +74,58 @@ emit_json_narratives: true
 
 # Whether to emit the human-readable event_narratives.md
 emit_md_narratives: true
+
+# ---------------------------------------------------------------------------
+# Stage 10b — Spatial Successor Discovery configuration
+# (s10b_spatial_successor_discovery.py)
+# ---------------------------------------------------------------------------
+
+# Enable cross-state CK lookup (Level 2 recovery). Set to false only for
+# testing or if you want to measure state-constrained-only resolution.
+enable_cross_state_resolution: true
+
+# Minimum intersection area (km²) for a candidate to enter the candidate
+# table. Filters digitization noise / slivers.
+min_discovery_intersection_km2: 1.0
+
+# Minimum intersection fraction of predecessor area (%) for a candidate.
+# A 0.5% overlap means the district touches meaningfully.
+min_candidate_overlap_pct: 0.5
+
+# Candidate ranking weights for the 10-criterion spatial discovery score.
+# Weights should sum to 1.0.
+candidate_ranking_weights:
+  intersection_pct_of_pre: 0.25      # primary signal: what fraction of pred does this cover
+  intersection_area_km2_norm: 0.20   # normalised by max overlap in the event
+  intersection_pct_of_candidate: 0.12 # does the candidate "fit" inside the predecessor?
+  name_similarity: 0.12              # fuzzy name match between declared successor and candidate
+  declared_in_event: 0.10            # was candidate explicitly listed in event_summary?
+  parent_child_relation: 0.08        # is candidate a known child/parent in district_relationship?
+  state_transition_compat: 0.06      # is the state transition historically plausible?
+  event_year_compat: 0.04            # is candidate active (established ≤ post_vintage)?
+  shared_boundary_norm: 0.02         # shared boundary fraction (if computable)
+  centroid_distance_inv: 0.01        # inverse centroid distance (proximity)
+
+# Minimum score for a candidate to receive SPATIALLY_CONFIRMED_BUT_EVENT_UNLISTED
+spatial_confirm_threshold: 0.55
+
+# Minimum score for a candidate to be recovered at L3/L4
+spatial_recovery_threshold: 0.65
+
+# Events whose year is within this many years of the most recent geometry
+# vintage (2025) but whose declared successors cannot be found spatially
+# are classified VINTAGE_MISMATCH rather than UNRESOLVED. This covers
+# 2022–2023 mega-splits where the event exists but the geometry may not
+# have been updated to reflect the exact new district extents.
+recent_event_vintage_gap_years: 4
+
+# Whether to write the persistent name alias registry back to gold layer.
+# Option A: true  → data/gold/core/name_alias_registry.parquet
+# Option B: false → aliases used in-run only
+persist_name_aliases: true
+
+# Minimum name similarity score (0-1, Jaro-Winkler) for an alias candidate
+# to be considered. An alias requires name evidence; proximity alone is never
+# sufficient.
+alias_name_similarity_threshold: 0.75
+

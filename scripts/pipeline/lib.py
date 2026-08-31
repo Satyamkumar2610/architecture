@@ -99,6 +99,21 @@ RESIDUAL_REASONS = {
     "EVENT_METADATA_INCOMPLETE": "event_summary row lacks sufficient fields to classify transfer",
     "UNRECOVERED_GEOMETRIC_RESIDUAL": "Residual ≥1% after all recovery levels exhausted",
     "UNKNOWN": "Reason cannot be determined from available evidence",
+    # --- Stage 10b extended codes ---
+    "NAME_RESOLUTION_FAILURE": "Named successor/predecessor could not be resolved to a CK at the target vintage",
+    "ALIAS_RESOLUTION": "Resolved via name alias (spelling variant / historical name / transliteration)",
+    "CROSS_STATE_IDENTITY_DRIFT": "Predecessor state differs from successor state; resolved via cross-state lookup",
+    "EVENT_SUCCESSOR_NOT_RESOLVED": "Event names a successor that cannot be matched to any geometry CK",
+    "SPATIAL_SUCCESSOR_DISCOVERED": "Successor found via full spatial scan of target vintage (not in declared event participants)",
+    "PARENT_CHILD_RECOVERY": "Residual assigned via parent-child relationship constraint (L4)",
+    "ADJACENCY_RECOVERY": "Residual assigned via shared-boundary / adjacency scoring (L5)",
+    "MISSING_GEOMETRIC_EVIDENCE": "No geometry exists for this CK at the relevant vintage",
+    "TRUE_UNRESOLVED_RESIDUAL": "All six recovery levels failed; residual is genuine missing territory",
+    "VINTAGE_MISMATCH_RECENT": "Event is recent (within vintage_gap_years of latest vintage); geometry may not reflect post-event state",
+    "GEOMETRY_AVAILABLE_NAME_MISMATCH": "Target geometry exists but name in CSV differs from geometry layer",
+    "GEOMETRY_AVAILABLE_IDENTITY_MISMATCH": "Target geometry exists but identity (CK) differs from declared successor",
+    "GEOMETRY_NOT_AVAILABLE": "No geometry polygon found for the target vintage that overlaps this predecessor",
+    "GENUINELY_UNRESOLVED": "Spatial search exhausted; no credible candidate found",
 }
 
 # Administrative relationship types (S10 classification)
@@ -108,6 +123,31 @@ ADMIN_RELATIONSHIP_TYPES = [
     "BOUNDARY_TRANSFER", "RENAME", "REORGANISATION",
     "RECLASSIFICATION", "UNKNOWN",
 ]
+
+# Candidate status codes (S10b spatial discovery)
+CANDIDATE_STATUS_CODES = [
+    "CONFIRMED_ADMINISTRATIVE_SUCCESSOR",       # admin evidence + geometry agree
+    "SPATIALLY_CONFIRMED_BUT_EVENT_UNLISTED",   # strong geometry; not in event_summary
+    "POSSIBLE_SPATIAL_SUCCESSOR",              # meaningful overlap; insufficient for auto-recovery
+    "NO_VALID_SPATIAL_SUCCESSOR",              # no credible candidate found
+]
+
+# Final event classification codes after S10b (per spec §23)
+FINAL_EVENT_CLASSIFICATIONS = [
+    "FULLY_RECONCILED",
+    "RECONCILED_WITH_IGNORABLE_RESIDUAL",
+    "RECONCILED_BY_SPATIAL_DISCOVERY",
+    "RECONCILED_BY_ALIAS",
+    "RECONCILED_BY_CROSS_STATE_RESOLUTION",
+    "REQUIRES_MANUAL_REVIEW",
+    "UNRESOLVED_GEOMETRIC_RESIDUAL",
+    "EVENT_GEOMETRY_IDENTITY_MISMATCH",
+    "VINTAGE_MISMATCH",
+    "MISSING_SPATIAL_EVIDENCE",
+]
+
+# Path for persistent alias registry (Option A)
+NAME_ALIAS_REGISTRY_PATH = GOLD_CORE_DIR / "name_alias_registry.parquet"
 
 GEOD = Geod(ellps="WGS84")
 

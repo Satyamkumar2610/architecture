@@ -12,14 +12,14 @@ by a documented, deterministic computation.
 
 All 9 vintage layers: **PASS**. Self-overlap
 fraction ranged 0.0000%-
-0.0039% of layer area, far under
+0.0038% of layer area, far under
 the 0.10% warning threshold. The
 source geometry is clean; none of the downstream defects found in the old
 pipeline originate here.
 
 ## Data quality finding: non-administrative placeholder polygons
 
-10 features across 6 vintages were excluded before any
+2 features across 6 vintages were excluded before any
 computation -- blank or sentinel names ("DATA NOT AVAILABLE") consistently
 attached to a ~80,520-108,672 km2 polygon in Jammu & Kashmir (unadministered/
 claimed territory shown for cartographic completeness, never subdivided
@@ -48,8 +48,8 @@ fabricated transfer.
 
 ## V3 — Ledger closure (conservation)
 
-3,872 source-district accounting rows. Closure holds within
-tolerance for 3,871 of them
+3,880 source-district accounting rows. Closure holds within
+tolerance for 3,879 of them
 (**99.97%**). 1 violation(s):
 district_name      state  year_a  year_b  closure_error_km2
   Pondicherry Puducherry    2001    2011           3.207309
@@ -66,7 +66,7 @@ vs. once on the whole polygon (empirically: mean 0.31 km2, max 1.13 km2,
 
 ## Identity (Stage 5)
 
-1,371 canonical keys allocated across
+1,376 canonical keys allocated across
 1951-2025. 742 active at 2025 (matches
 the 742 usable 2025 SOI
 districts exactly). Identity was resolved from spatial continuity
@@ -82,20 +82,20 @@ directions -- see `outputs/pipeline/s5_continuity_diagnostics.csv`.
 
 A territorial transfer between two continuing districts must not produce a
 `district_relationship` row. **PASS**
-(2,578 genuine lineage edges, all into CKs established in
-that exact window; 7,227 territorial-transfer edges routed to
+(2,598 genuine lineage edges, all into CKs established in
+that exact window; 7,233 territorial-transfer edges routed to
 `measured_area_transfer` instead, per architecture section 11).
 
 relationship_type breakdown:
 relationship_type
-MERGED_INTO    1037
-FORMED_FROM     882
-SPLIT_FROM      659
+MERGED_INTO    1058
+FORMED_FROM     885
+SPLIT_FROM      655
 
 lineage_basis breakdown (corroboration against the events CSV; geometry
 decides the edge, the CSV corroborates it):
 lineage_basis
-SPATIAL_INFERRED             2008
+SPATIAL_INFERRED             2028
 GAZETTE_CORROBORATED          541
 GAZETTE_CORROBORATED_WEAK      29
 
@@ -155,3 +155,30 @@ after every run.
 - SQL DDL / empty config files noted in the original audit
   (docs/architecture/lineage_area_redesign.md section 2.9) are unchanged;
   this pipeline runs as Python + Parquet, not the medallion DuckDB schema.
+
+## Stage 10 — Event Area Transfer Matrix & Territorial Reconciliation
+
+Full event-level spatial accounting (s10_event_area_transfer_matrix.py).
+Detailed QC report: `outputs/event_transfer/s10_qc_report.md`
+
+| Metric | Value |
+|---|---|
+| Total events processed | 935 |
+| Events fully reconciled | 168 (18.0%) |
+| Events within <1% residual tolerance | 356 |
+| Events with unresolved residual | 86 |
+| Events with admin/spatial classification disagreement | 926 |
+| Total measured transfer area | 3,327,028.2 km² |
+| Total unresolved residual area | 792,625.31 km² |
+
+Administrative vs spatial relationship breakdown:
+administrative_relationship
+CARVE_OUT         350
+MULTIWAY_SPLIT      8
+RENAME            134
+REORGANISATION     28
+SPLIT             383
+TRIFURCATION       32
+
+Open `outputs/event_transfer/event_residuals.gpkg` in QGIS to inspect
+unresolved residuals and measured transfers spatially.

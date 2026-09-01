@@ -1,6 +1,0 @@
-2026-08-19 01:35:59,067 [INFO] __main__: ======================================================================
-2026-08-19 01:35:59,067 [INFO] __main__: DISTRICT EVOLUTION INTELLIGENCE SYSTEM
-2026-08-19 01:35:59,067 [INFO] __main__: PHASE 2 — SILVER LAYER STANDARDIZATION
-2026-08-19 01:35:59,067 [INFO] __main__: ======================================================================
-2026-08-19 01:35:59,070 [INFO] __main__: Processing spatial source: stanford
-2026-08-19 01:35:59,071 [INFO] __main__:   Processing stanford/1951 from stanford_districts_1951_1951.geoparquet

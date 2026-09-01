@@ -1,2 +1,0 @@
-event_id,event_type,source_ck,target_ck,target_count,parent_area_loss_km2,allocated_transfer_km2,audit_classification,audit_reason
-,,,,0,,,NOT_TESTABLE,No event/source group has more than one target lineage relationship.
